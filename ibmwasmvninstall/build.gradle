@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+configurations {
+    mvnwClasspath
+}
+
+dependencies {
+    mvnwClasspath files("$projectDir/.mvn/wrapper/maven-wrapper.jar")
+}
+
+
+task installWebSphere(type: JavaExec) {
+    outputs.upToDateWhen { false }
+    def pom = sourceSets.main.resources.srcDirs.first().path + '/was.installer-8.5.5.pom'
+    classpath = configurations.mvnwClasspath
+    main = "org.apache.maven.wrapper.MavenWrapperMain"
+	args "install -f \"c:\\temp\\was.installer-8.5.5-FixPack-01.pom\" -D serverInstallationFolder=\"c:\\ibm\\WebSphere\\AppServer\""
+	println args
+    //args "install -f", pom, "-D","serverInstallationFolder=c:/ibm/WebSphere/AppServer"
+}
